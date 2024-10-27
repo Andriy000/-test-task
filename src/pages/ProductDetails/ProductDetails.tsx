@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Product, Comment } from '../types';
-import ProductModal from './ProductModal';
+import { Product, Comment } from '../../types';
+import ProductModal from '../../components/ProductModal';
 import {
   fetchProductById,
   updateProduct,
   fetchCommentsByProductId,
   addComment,
   deleteCommentById,
-} from '../api/api'; 
+} from '../../api/api'; 
 
-const ProductDetails = () => {
+export const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
@@ -65,7 +65,7 @@ const ProductDetails = () => {
   const handleDeleteComment = async (commentId: string) => {
     try {
       await deleteCommentById(commentId);
-      fetchComments(); // Викликати fetchComments для оновлення після видалення
+      fetchComments();
     } catch (error) {
       console.error('Error deleting comment:', error);
     }
@@ -150,4 +150,4 @@ const ProductDetails = () => {
   );
 };
 
-export default ProductDetails;
+

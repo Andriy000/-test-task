@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ProductList from './components/ProductList';
-import ProductDetails from './components/ProductDetails';
+import { ProductList } from './pages/ProductList';
+import { ProductDetails } from './pages/ProductDetails';
 
 const App = () => {
   return (

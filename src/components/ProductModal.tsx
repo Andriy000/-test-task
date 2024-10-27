@@ -11,20 +11,33 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, onSubmit 
   const [formData, setFormData] = useState({
     name: product?.name || '',
     imageUrl: product?.imageUrl || '',
-    count: product?.count || 0,
+    count: product?.count !== undefined ? product.count : '',
     size: {
-      width: product?.size?.width || 0,
-      height: product?.size?.height || 0,
+      width: product?.size?.width !== undefined ? product.size.width : '',
+      height: product?.size?.height !== undefined ? product.size.height : '',
     },
     weight: product?.weight || '',
   });
 
+  const [isImageUrlValid, setIsImageUrlValid] = useState(true);
+
+  const validateUrl = (url: string) => {
+    const urlPattern = /^(https?:\/\/)?([\w\d-]+\.)+[\w-]{2,}(\/.*)?$/;
+    return urlPattern.test(url);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.imageUrl || formData.count <= 0) {
+    if (!formData.name || !formData.imageUrl || formData.count <= 0 || !isImageUrlValid) {
       return;
     }
     onSubmit(formData);
+  };
+
+  const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const url = e.target.value;
+    setIsImageUrlValid(validateUrl(url));
+    setFormData({ ...formData, imageUrl: url });
   };
 
   return (
@@ -51,10 +64,15 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, onSubmit 
             <input
               type="text"
               value={formData.imageUrl}
-              onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-              className="w-full border rounded px-2 py-1"
+              onChange={handleImageUrlChange}
+              className={`w-full border rounded px-2 py-1 ${!isImageUrlValid ? 'border-red-500' : ''}`}
               required
             />
+            {!isImageUrlValid && (
+              <p className="text-red-500 text-sm">
+                Please enter a valid URL (https://example.com/image.jpg).
+              </p>
+            )}
           </div>
 
           <div>
@@ -131,4 +149,5 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, onSubmit 
     </div>
   );
 };
+
 export default ProductModal;
