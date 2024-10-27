@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Product } from '../types';
+import { Product } from '../../types';
 import { Link } from 'react-router-dom';
-import ProductModal from './ProductModal';
-import DeleteModal from './DeleteModal';
+import ProductModal from '../../components/ProductModal';
+import DeleteModal from '../../components/DeleteModal';
 import {
   fetchProducts as fetchProductsAPI,
   createProduct as createProductAPI,
   deleteProductById as deleteProductAPI,
-} from '../api/api';
+} from '../../api/api';
 
-const ProductList = () => {
+export const ProductList = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [sortType, setSortType] = useState<'name' | 'count'>('name');
   const [showAddModal, setShowAddModal] = useState(false);
@@ -128,5 +128,3 @@ const ProductList = () => {
     </div>
   );
 };
-
-export default ProductList;

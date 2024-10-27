@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Product, Comment } from '../types';
 
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = 'https://backend-test-task-production.up.railway.app/api';
 
 export const fetchProductById = async (id: string): Promise<Product> => {
   const response = await axios.get(`${API_BASE_URL}/product/getById/${id}`);
